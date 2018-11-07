@@ -1,0 +1,41 @@
+# Model Config File
+# This gets copied to model directory when training is started
+
+[database]
+train = './data/train_data.csv'
+test = './data/test_data.csv'
+
+[data_stats]
+lmin = 0.0          # load minimum
+lmax = 600.0        # load maximum (generation capacity)
+tmin = 0.0          # temperature minimum
+tmax = 120.0        # temperature maximum
+yearStart = 1900.0  # counting year from 1900
+yearEnd = 2100.0    # world ends in 2100
+
+[model_arch]
+modelArch = 'LSTM01'               # model architecture to use from modelLib.py
+modelDir = './models'              # where models are saved
+modelName = 'LSTM01_001'           # name to save model with
+
+[model_params]      # params particular to an architecture (define models in modelLib.py)
+seqLength = 360     # number of hours, 360 = 24 * 15 days
+stepSize = 120      # number of hours offset between each sequence
+inputDim = 7                          
+outputDim = 1
+denseUnits = [1024,1024,1024,1024]                      
+denseActivation = ['prelu', 'prelu', 'prelu', 'prelu']
+lstmUnits = [256,1]
+lstmActivation = ['sigmoid','sigmoid']
+batchnorm = true
+dropout = 0.5
+
+[training_params]
+epochs = 100
+batchSize = 512        
+patience = 40           # number of epochs to wait before stopping if no change in loss
+learningRate = 0.001
+optimizer = 'adam'      # 'sgd' / 'adam' / 'adagrad' / 'adadelta'/ 'rmsprop' 
+lossFunc = 'mse'        # 'mse' / 'mae' / 'mape'
+metricFuncs = []
+saveAllWeights = false
